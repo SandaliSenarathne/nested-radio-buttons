@@ -41,11 +41,12 @@ public class MainActivity extends AppCompatActivity {
             View child = getLayoutInflater().inflate(R.layout.choice_with_image_layout, null);
 
             RadioButton radio = child.findViewById(R.id.radio);
+            rg.add(radio);
             ImageView img = child.findViewById(R.id.img);
 
             radio.setText(choice.getChoiceText());
             radio.setChecked(false);
-            rg.add(radio);
+
             img.setImageResource(R.drawable.tom);
 
             child.setOnClickListener(new View.OnClickListener() {
