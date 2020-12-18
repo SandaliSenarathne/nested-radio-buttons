@@ -1,33 +1,41 @@
 package com.infinisolutions.nestedradiobuttons;
 
-import java.util.ArrayList;
-
 import android.content.Context;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Checkable;
 import android.widget.LinearLayout;
 
-public class MyRadioGroup extends LinearLayout {
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
-    private ArrayList<View> mCheckables = new ArrayList<View>();
+import java.util.ArrayList;
 
-    public MyRadioGroup(Context context) {
+public class CustomizedRadioGroup extends LinearLayout {
+
+    private ArrayList<View> radioButtons = new ArrayList<View>();
+
+    public CustomizedRadioGroup(Context context) {
         super(context);
     }
 
-    public MyRadioGroup(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+    public CustomizedRadioGroup(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
     }
 
-    public MyRadioGroup(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+    public CustomizedRadioGroup(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public CustomizedRadioGroup(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override
-    public void addView(View child, int index,
-                        android.view.ViewGroup.LayoutParams params) {
+    public void addView(View child, int index, android.view.ViewGroup.LayoutParams params) {
         super.addView(child, index, params);
         parseChild(child);
     }
@@ -36,13 +44,13 @@ public class MyRadioGroup extends LinearLayout {
     {
         if(child instanceof Checkable)
         {
-            mCheckables.add(child);
+            radioButtons.add(child);
             child.setOnClickListener(new OnClickListener() {
 
                 public void onClick(View v) {
-                    for(int i = 0; i < mCheckables.size();i++)
+                    for(int i = 0; i < radioButtons.size();i++)
                     {
-                        Checkable view = (Checkable) mCheckables.get(i);
+                        Checkable view = (Checkable) radioButtons.get(i);
                         if(view == v)
                         {
                             ((Checkable)view).setChecked(true);
@@ -68,4 +76,5 @@ public class MyRadioGroup extends LinearLayout {
             parseChild(child.getChildAt(i));
         }
     }
+
 }
